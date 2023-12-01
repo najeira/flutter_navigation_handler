@@ -1,0 +1,20 @@
+name: navigation_listener
+description: "A widget that listens to navigation events."
+version: 0.0.1
+homepage: https://github.com/najeira/flutter_navigation_listener
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  
