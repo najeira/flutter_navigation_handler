@@ -1,7 +1,7 @@
-name: navigation_listener
+name: navigation_handler
 description: "A widget that listens to navigation events."
 version: 0.0.1
-homepage: https://github.com/najeira/flutter_navigation_listener
+homepage: https://github.com/najeira/flutter_navigation_handler
 
 environment:
   sdk: '>=3.2.0 <4.0.0'

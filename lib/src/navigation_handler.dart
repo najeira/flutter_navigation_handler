@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 /// A widget that listens to navigation events.
-class NavigationListener extends StatefulWidget {
-  const NavigationListener({
+class NavigationHandler extends StatefulWidget {
+  const NavigationHandler({
     super.key,
     required this.child,
     this.onPopNext,
@@ -29,10 +29,10 @@ class NavigationListener extends StatefulWidget {
   final VoidCallback? onPushNext;
 
   @override
-  State<NavigationListener> createState() => NavigationListenerState();
+  State<NavigationHandler> createState() => NavigationHandlerState();
 }
 
-class NavigationListenerState extends State<NavigationListener>
+class NavigationHandlerState extends State<NavigationHandler>
     with RouteAware {
   RouteObserver<ModalRoute<dynamic>>? _observer;
 
