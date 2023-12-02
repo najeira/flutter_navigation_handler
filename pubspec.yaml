@@ -1,6 +1,6 @@
 name: navigation_handler
 description: "A widget that listens to navigation events."
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/najeira/flutter_navigation_handler
 
 environment:
