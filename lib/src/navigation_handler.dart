@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
 
+typedef NavigationCallback = void Function(
+    NavigatorState?, ModalRoute<dynamic>);
+
 /// A widget that listens to navigation events.
 class NavigationHandler extends StatefulWidget {
   const NavigationHandler({
@@ -16,25 +19,26 @@ class NavigationHandler extends StatefulWidget {
 
   /// Called when the top route has been popped off, and the current route
   /// shows up.
-  final VoidCallback? onPopNext;
+  final NavigationCallback? onPopNext;
 
   /// Called when the current route has been pushed.
-  final VoidCallback? onPush;
+  final NavigationCallback? onPush;
 
   /// Called when the current route has been popped off.
-  final VoidCallback? onPop;
+  final NavigationCallback? onPop;
 
   /// Called when a new route has been pushed, and the current route is no
   /// longer visible.
-  final VoidCallback? onPushNext;
+  final NavigationCallback? onPushNext;
 
   @override
   State<NavigationHandler> createState() => NavigationHandlerState();
 }
 
-class NavigationHandlerState extends State<NavigationHandler>
-    with RouteAware {
+class NavigationHandlerState extends State<NavigationHandler> with RouteAware {
   RouteObserver<ModalRoute<dynamic>>? _observer;
+
+  ModalRoute<dynamic>? _route;
 
   @override
   @mustCallSuper
@@ -45,14 +49,14 @@ class NavigationHandlerState extends State<NavigationHandler>
 
   void _subscribe() {
     final observer = _findRouteObserver(context);
-    if (observer != _observer) {
+    final route = ModalRoute.of(context);
+    if (observer != _observer || route != _route) {
       _unsubscribe();
     }
     _observer = observer;
-
-    final route = ModalRoute.of(context);
-    if (route != null) {
-      observer?.subscribe(this, route);
+    _route = route;
+    if (observer != null && route != null) {
+      observer.subscribe(this, route);
     }
   }
 
@@ -66,26 +70,25 @@ class NavigationHandlerState extends State<NavigationHandler>
   void _unsubscribe() {
     _observer?.unsubscribe(this);
     _observer = null;
+    _route = null;
   }
 
   @override
-  void didPopNext() {
-    widget.onPopNext?.call();
-  }
+  void didPopNext() => _call(widget.onPopNext);
 
   @override
-  void didPush() {
-    widget.onPush?.call();
-  }
+  void didPush() => _call(widget.onPush);
 
   @override
-  void didPop() {
-    widget.onPop?.call();
-  }
+  void didPop() => _call(widget.onPop);
 
   @override
-  void didPushNext() {
-    widget.onPushNext?.call();
+  void didPushNext() => _call(widget.onPushNext);
+
+  void _call(NavigationCallback? callback) {
+    if (callback != null && _observer != null && _route != null) {
+      callback(_observer?.navigator, _route!);
+    }
   }
 
   @override
