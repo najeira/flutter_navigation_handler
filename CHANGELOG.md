@@ -1,3 +1,11 @@
-## 0.0.1
+## v0.0.3
 
-* TODO: Describe initial release.
+* add NavigatorState and ModalRoute to callback.
+
+## v0.0.2
+
+* rename NavigationListener to NavigationHandler.
+
+## v0.0.1
+
+* initial release.
