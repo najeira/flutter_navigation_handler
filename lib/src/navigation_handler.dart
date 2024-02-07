@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 typedef NavigationCallback = void Function(
-    NavigatorState?, ModalRoute<dynamic>);
+    NavigatorState?, PageRoute<dynamic>);
 
 /// A widget that listens to navigation events.
 class NavigationHandler extends StatefulWidget {
@@ -36,9 +36,9 @@ class NavigationHandler extends StatefulWidget {
 }
 
 class NavigationHandlerState extends State<NavigationHandler> with RouteAware {
-  RouteObserver<ModalRoute<dynamic>>? _observer;
+  RouteObserver<PageRoute<dynamic>>? _observer;
 
-  ModalRoute<dynamic>? _route;
+  PageRoute<dynamic>? _route;
 
   @override
   @mustCallSuper
@@ -49,7 +49,7 @@ class NavigationHandlerState extends State<NavigationHandler> with RouteAware {
 
   void _subscribe() {
     final observer = _findRouteObserver(context);
-    final route = ModalRoute.of(context);
+    final route = ModalRoute.of(context) as PageRoute<dynamic>?;
     if (observer != _observer || route != _route) {
       _unsubscribe();
     }
@@ -95,11 +95,11 @@ class NavigationHandlerState extends State<NavigationHandler> with RouteAware {
   Widget build(BuildContext context) => widget.child;
 }
 
-RouteObserver<ModalRoute<dynamic>>? _findRouteObserver(BuildContext context) {
+RouteObserver<PageRoute<dynamic>>? _findRouteObserver(BuildContext context) {
   final nav = Navigator.maybeOf(context);
   if (nav != null) {
     for (final observer in nav.widget.observers) {
-      if (observer is RouteObserver<ModalRoute<dynamic>>) {
+      if (observer is RouteObserver<PageRoute<dynamic>>) {
         return observer;
       }
     }
