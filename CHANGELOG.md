@@ -1,3 +1,7 @@
+## v0.0.4
+
+* use PageRoute instead of ModalRoute.
+
 ## v0.0.3
 
 * add NavigatorState and ModalRoute to callback.
